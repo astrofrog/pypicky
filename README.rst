@@ -7,7 +7,7 @@ version requirements pre-applied.
 Installing
 ----------
 
-To install:
+To install::
 
     pip install git+https://github.com/astrofrog/pypicky
 
