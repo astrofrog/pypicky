@@ -9,7 +9,7 @@ Installing
 
 To install::
 
-    pip install git+https://github.com/astrofrog/pypicky
+    pip install pypicky
 
 Using
 -----
