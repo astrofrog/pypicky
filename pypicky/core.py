@@ -3,7 +3,7 @@ import socket
 import click
 import requests
 import requirements
-from flask import Flask
+from flask import Flask, redirect
 
 from packaging.specifiers import SpecifierSet
 from packaging.version import Version
@@ -27,14 +27,15 @@ PACKAGE_HTML = """
 
 @click.command()
 @click.argument('requirements_file')
-def main(requirements_file):
+@click.option('--port', default=None)
+def main(requirements_file, port):
 
     app = Flask(__name__)
 
     INDEX = requests.get(MAIN_PYPI).content
 
     SPECIFIERS = {}
-    with open('requirements.txt', 'r') as fd:
+    with open(requirements_file, 'r') as fd:
         for req in requirements.parse(fd):
             if req.specs:
                 SPECIFIERS[req.name] = SpecifierSet(','.join([''.join(spec) for spec in req.specs]))
@@ -47,7 +48,7 @@ def main(requirements_file):
     def package_info(package):
 
         if package not in SPECIFIERS:
-            return requests.get(MAIN_PYPI + '/' + package).content
+            return redirect(MAIN_PYPI + package)
 
         package_index = requests.get(JSON_URL.format(package=package)).json()
 
@@ -66,7 +67,8 @@ def main(requirements_file):
     host = socket.gethostbyname('localhost')
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(('localhost', 0))
-    port = sock.getsockname()[1]
+    if port is None:
+        port = sock.getsockname()[1]
     sock.close()
 
     app.run(host=host, port=port)
