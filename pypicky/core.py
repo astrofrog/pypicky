@@ -35,6 +35,7 @@ PACKAGE_HTML = """
 def main(requirements_file, port, quiet):
 
     INDEX = requests.get(MAIN_PYPI).content
+    INDEX = INDEX.replace(b'href="/simple', b'href="')
 
     SPECIFIERS = {}
     with open(requirements_file, 'r') as fd:
@@ -75,7 +76,7 @@ def main(requirements_file, port, quiet):
     sock.close()
 
     app = Application([(r"/", MainIndexHandler),
-                       (PathMatches(r"/(?P<package>\S+)/?"), PackageIndexHandler)])
+                       (PathMatches(r"/(?P<package>\S+)\//?"), PackageIndexHandler)])
 
     app.listen(port=port)
 
