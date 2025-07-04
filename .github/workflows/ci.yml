@@ -18,15 +18,10 @@ jobs:
       submodules: false
       envs: |
         - linux: codestyle
-        - windows: py310-test-cli
-        - macos: py311-test-cli
-        - linux: py311-test-cli
-        - linux: py312-test-cli
-        - linux: py313-test-cli
-        - windows: py310-test-config
-        - macos: py312-test-config
-        - linux: py310-test-config
-        - linux: py311-test-config
+        - macos: py310-test
+        - linux: py311-test
+        - windows: py312-test
+        - macos: py313-test
 
   publish:
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
