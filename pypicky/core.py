@@ -62,10 +62,14 @@ def main(requirements_file, port, quiet):
                 if Version(version) in SPECIFIERS[package]:
                     for file in release:
                         if file['requires_python'] is None:
-                            release_links += '    <a href="{url}#sha256={sha256}">{filename}</a><br/>\n'.format(url=file['url'], sha256=file['digests']['sha256'], filename=file['filename'])
+                            release_links += '    <a href="{url}#sha256={sha256}">{filename}</a><br/>\n'.format(
+                                url=file['url'], sha256=file['digests']['sha256'], filename=file['filename'])
                         else:
                             rp = file['requires_python'].replace('>', '&gt;')
-                            release_links += '    <a href="{url}#sha256={sha256}" data-requires-python="{rp}">{filename}</a><br/>\n'.format(url=file['url'], sha256=file['digests']['sha256'], rp=rp, filename=file['filename'])
+                            release_links += ('    <a href="{url}#sha256={sha256}" '
+                                              'data-requires-python="{rp}">{filename}</a><br/>\n'.format(
+                                               url=file['url'], sha256=file['digests']['sha256'],
+                                               rp=rp, filename=file['filename']))
 
             self.write(PACKAGE_HTML.format(package=package, links=release_links))
 

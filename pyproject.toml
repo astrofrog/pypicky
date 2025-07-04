@@ -22,6 +22,11 @@ dynamic = ["version"]
 [project.scripts]
 pypicky = "pypicky.core:main"
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+
 [tool.setuptools.packages]
 find = {namespaces = false}
 

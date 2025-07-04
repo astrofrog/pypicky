@@ -36,7 +36,7 @@ def test_basic(tmpdir):
                 "pip",
                 "install",
                 "-i",
-                f"http://localhost:8100",
+                "http://localhost:8100",
                 "astropy",
             ]
         )
